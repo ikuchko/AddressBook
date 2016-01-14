@@ -3,6 +3,9 @@ import static org.junit.Assert.*;
 
 public class ContactTest {
 
+  @Rule
+  public ClearRule clearRule = new ClearRule();
+
   @Test
   public void contact_instantiatesCorrectly_true(){
     Contact newContact = new Contact("Chris", "Houghton", "1980/01/01");
@@ -46,7 +49,31 @@ public class ContactTest {
     Contact contact = new Contact("Fist", "Last", "1960/01/01");
     contact.addNumber(503, 1112233, "cell");
     contact.addNumber(503, 1112244, "home");
+    assertEquals("503-1112233 cell", contact.getPhoneNumber(1));
     assertEquals("503-1112244 home", contact.getPhoneNumber(2));
   }
+
+  @Test
+  public void contact_returnListOfNumbers(){
+    Contact contact = new Contact("Fist", "Last", "1960/01/01");
+    contact.addNumber(503, 1112233, "cell");
+    contact.addNumber(503, 1112244, "home");
+    assertEquals(2, contact.getNumberList().size());
+  }
+
+  @Test
+  public void contact_emptiesAllTasksFromArrayList() {
+    Contact contact = new Contact("Fist", "Last", "1960/01/01");
+    Contact.clear();
+    assertEquals(Contact.getNumberList().size(), 0);
+  }
+
+  @Test
+  public void contact_returnListOfContacts_true() {
+    Contact firstContact = new Contact("Fist", "Last", "1960/01/01");
+    Contact secondContact = new Contact("Very fist", "Very last", "960/01/02");
+    assertEquals(2, Contact.getContactList().size());
+  }
+
 
 }
