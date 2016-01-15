@@ -1,9 +1,9 @@
 apply plugin: 'java'
 apply plugin: 'application'
 
-archivesBaseName = "rock-paper-scissors"
+archivesBaseName = "Address-book"
 version = "1.0"
-mainClassName = "RPSGame"
+mainClassName = "App"
 
 repositories {
   mavenCentral()
