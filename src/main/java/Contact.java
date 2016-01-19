@@ -1,6 +1,7 @@
 import java.util.Date;
 import java.util.*;
 import java.text.SimpleDateFormat;
+import org.sql2o.*;
 
   public class Contact {
   private ArrayList<Phone> phoneNumbers = new ArrayList<Phone>();
@@ -16,8 +17,6 @@ import java.text.SimpleDateFormat;
     mFirstName = firstName;
     mLastName = lastName;
     mBirthDate = birthDate;
-    contactList.add(this);
-    this.id = contactList.size();
   }
 
   public String getFirstName(){
@@ -36,11 +35,46 @@ import java.text.SimpleDateFormat;
     return id;
   }
 
-  public static Contact find(int id){
-    try {
-      return contactList.get(id-1);
-    } catch (IndexOutOfBoundsException ioobe) {
-      return null;
+  @Override
+  public boolean equals(Object otherContact) {
+    if (!(otherContact instanceof Contact)) {
+      return false;
+    } else {
+      Contact newContact = (Contact) otherContact;
+      return (this.getFirstName().equals(newContact.getFirstName())) &&
+             (this.getLastName().equals(newContact.getLastName())) &&
+             (this.getBirthDate().equals(newContact.getBirthDate())) ;
+            //  &&
+            //  (this.getId() == newContact.getId());
+    }
+  }
+
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO contacts(first_name, last_name, birth_date) VALUES (:firstName, :lastName, TO_DATE(:birthDate, 'yyyy-mm-dd'))";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("firstName", this.mFirstName)
+        .addParameter("lastName", this.mLastName)
+        .addParameter("birthDate", this.mBirthDate)
+        .executeUpdate()
+        .getKey();
+    }
+  }
+
+  public static List<Contact> all(){
+    String sql = "SELECT id, first_name AS mFirstName, last_name AS mLastName, birth_date AS mBirthDate FROM contacts";
+    try (Connection con = DB.sql2o.open()){
+      return con.createQuery(sql).executeAndFetch(Contact.class);
+    }
+  }
+
+  public static Contact find(int id) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT id, first_name AS mFirstName, last_name AS mLastName, birth_date AS mBirthDate FROM contacts WHERE id=:id";
+      Contact contact = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Contact.class);
+      return contact;
     }
   }
 

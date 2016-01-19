@@ -52,16 +52,16 @@ public class App {
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-    post("/newNumber", (request, response) -> {
-      Map<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/success.vtl");
-
-      String id = request.queryParams("contactId");
-      Phone phone = new Phone(Integer.parseInt(request.queryParams("areaCode")), (Integer.parseInt(request.queryParams("phoneNumber"))), request.queryParams("type"));
-      Contact.find(Integer.parseInt(id)).addNumber(phone);
-      model.put("phone", phone);
-      model.put("contactId", id);
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
+    // post("/newNumber", (request, response) -> {
+    //   Map<String, Object> model = new HashMap<String, Object>();
+    //   model.put("template", "templates/success.vtl");
+    //
+    //   String id = request.queryParams("contactId");
+    //   Phone phone = new Phone(Integer.parseInt(request.queryParams("areaCode")), (Integer.parseInt(request.queryParams("phoneNumber"))), request.queryParams("type"));
+    //   Contact.find(Integer.parseInt(id)).addNumber(phone);
+    //   model.put("phone", phone);
+    //   model.put("contactId", id);
+    //   return new ModelAndView(model, layout);
+    // }, new VelocityTemplateEngine());
   }
 }
