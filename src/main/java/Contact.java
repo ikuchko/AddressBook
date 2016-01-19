@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
   public class Contact {
   private static ArrayList<Phone> phoneNumbers = new ArrayList<Phone>();
   private static ArrayList<Contact> contactList = new ArrayList<Contact>();
+  private ArrayList<Email> emailList = new ArrayList<Email>();
+  private ArrayList<Address> addressList = new ArrayList<Address>();
   private String mFirstName;
   private String mLastName;
   private String mBirthDate;
@@ -61,4 +63,21 @@ import java.text.SimpleDateFormat;
   public static ArrayList<Contact> getContactList() {
     return contactList;
   }
+
+  public void addEmail(Email email){
+    emailList.add(email);
+  }
+
+  public ArrayList<Email> getEmailList() {
+    return emailList;
+  }
+
+  public void addAddress(Address address){
+    addressList.add(address);
+  }
+
+  public ArrayList<Address> getAddressList(){
+    return addressList;
+  }
+
 }

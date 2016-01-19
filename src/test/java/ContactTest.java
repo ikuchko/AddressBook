@@ -75,5 +75,27 @@ public class ContactTest {
     assertEquals(2, Contact.getContactList().size());
   }
 
+  @Test
+  public void contact_returnListOfEmails_true() {
+    Contact newContact = new Contact("First", "Last", "1900/01/22");
+    Email firstEmail = new Email("awd@awd.awd", "home");
+    Email secondEmail = new Email("ad@aw.awd", "work");
+    newContact.addEmail(firstEmail);
+    newContact.addEmail(secondEmail);
+    assertTrue(newContact.getEmailList().contains(firstEmail));
+    assertTrue(newContact.getEmailList().contains(secondEmail));
+  }
+
+  @Test
+  public void contact_returnListOfAddresses_true() {
+    Contact newContact = new Contact("First", "Last", "1900/01/22");
+    Address firstAddress = new Address("Abbe St.", "301", "Portland", "Oregon", "97210", "home");
+    Address secondAddress = new Address("Abbe St.", "302", "Portland", "Oregon", "97210", "work");
+    newContact.addAddress(firstAddress);
+    newContact.addAddress(secondAddress);
+    assertTrue(newContact.getAddressList().contains(firstAddress));
+    assertTrue(newContact.getAddressList().contains(secondAddress));
+  }
+
 
 }
