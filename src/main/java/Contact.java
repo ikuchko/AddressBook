@@ -3,7 +3,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
   public class Contact {
-  private static ArrayList<Phone> phoneNumbers = new ArrayList<Phone>();
+  private ArrayList<Phone> phoneNumbers = new ArrayList<Phone>();
   private static ArrayList<Contact> contactList = new ArrayList<Contact>();
   private ArrayList<Email> emailList = new ArrayList<Email>();
   private ArrayList<Address> addressList = new ArrayList<Address>();
@@ -58,14 +58,21 @@ import java.text.SimpleDateFormat;
     return phone.getPhoneNumber() + " " + phone.getType();
   }
 
-  public static ArrayList<Phone> getNumberList() {
+  public ArrayList<Phone> getNumberList() {
     return phoneNumbers;
 
   }
 
   public static void clear(){
-    phoneNumbers.clear();
     contactList.clear();
+    for (Contact contact: Contact.getContactList()){
+      contact.clearData();
+    }
+  }
+  public void clearData(){
+    phoneNumbers.clear();
+    emailList.clear();
+    addressList.clear();
   }
 
   public static ArrayList<Contact> getContactList() {
