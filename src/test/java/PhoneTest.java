@@ -3,6 +3,9 @@ import static org.junit.Assert.*;
 
 public class PhoneTest {
 
+  @Rule
+  public DatabaseRule database = new DatabaseRule();
+
   @Test
   public void phone_instantiatesCorrectly_true(){
     Phone newPhone = new Phone(503, 5551212, "Home", 1);
@@ -32,5 +35,13 @@ public class PhoneTest {
     Phone newPhone = new Phone (503, 5551122, "cell", 1);
     newPhone.save();
     assertEquals(Phone.all(1).get(0).getId(), newPhone.getId());
+  }
+
+  @Test
+  public void phone_findsPhoneInDatabase_true() {
+    Phone newPhone = new Phone (503, 5551122, "cell", 1);
+    newPhone.save();
+    Phone savedPhone = Phone.find(newPhone.getId());
+    assertTrue(newPhone.equals(savedPhone));
   }
 }

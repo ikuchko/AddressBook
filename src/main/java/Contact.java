@@ -43,9 +43,8 @@ import org.sql2o.*;
       Contact newContact = (Contact) otherContact;
       return (this.getFirstName().equals(newContact.getFirstName())) &&
              (this.getLastName().equals(newContact.getLastName())) &&
-             (this.getBirthDate().equals(newContact.getBirthDate())) ;
-            //  &&
-            //  (this.getId() == newContact.getId());
+             (this.getBirthDate().equals(newContact.getBirthDate())) &&
+             (this.getId() == newContact.getId());
     }
   }
 

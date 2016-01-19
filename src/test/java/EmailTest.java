@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 public class EmailTest {
 
   @Rule
-  public ClearRule clearRule = new ClearRule();
+   public DatabaseRule database = new DatabaseRule();
 
   @Test
   public void email_instantiateCorrectly_true(){

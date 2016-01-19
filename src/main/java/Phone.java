@@ -23,6 +23,24 @@ public class Phone {
     return id;
   }
 
+  public int getContactId() {
+    return contactId;
+  }
+
+  @Override
+  public boolean equals(Object otherPhone) {
+    if (!(otherPhone instanceof Phone)) {
+      return false;
+    } else {
+      Phone newPhone = (Phone) otherPhone;
+      return (this.getPhoneNumber().equals(newPhone.getPhoneNumber())) &&
+             (this.getAreaCode() == newPhone.getAreaCode()) &&
+             (this.getType().equals(newPhone.getType())) &&
+             (this.getId() == newPhone.getId()) &&
+             (this.getContactId() == newPhone.getContactId());
+    }
+  }
+
   public String getPhoneNumber() {
     String areaCode = Integer.toString(mAreaCode);
     String phoneNumber = Integer.toString(mPhoneNumber);
@@ -54,4 +72,13 @@ public class Phone {
     }
   }
 
+  public static Phone find(int phoneId) {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT id, area_code AS mAreaCode, phone AS mPhoneNumber, type AS mType, contact_id AS contactId FROM phones WHERE id=:id";
+      return (Phone) con.createQuery(sql)
+        .addParameter("id", phoneId)
+        .executeAndFetchFirst(Phone.class);
+      //return phone;
+    }
+  }
 }

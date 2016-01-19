@@ -7,6 +7,16 @@ public class Email{
     this.type = type;
   }
 
+  @Override
+  public boolean equals(Object otherEmail) {
+    if (!(otherEmail instanceof Email)) {
+      return false;
+    } else {
+      Email newEmail = (Email) otherEmail;
+      return this.getEmail().equals(newEmail.getEmail());
+    }
+  }
+  
   public String getEmail(){
     return email;
   }
