@@ -1,4 +1,14 @@
-<h1>Welcome to address book</h1>
-<form action="/blabla" method="get">
-  <button type="submit" class="btn btn-warning" name="button">Open contacts</button>
+<h3>Welcome to address book</h3>
+
+#foreach ($contact in $contacts)
+  <br>
+  <a href="/contact/$contact.getId()">$contact.getLastName() $contact.getFirstName() ($contact.numberAmount() number(s) available)</a>
+#end
+
+<br>
+<br>
+<br>
+
+<form action="/newContact" method="get">
+  <button type="submit" class="btn btn-warning" name="button">Create contact</button>
 </form>

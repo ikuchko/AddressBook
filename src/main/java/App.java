@@ -13,14 +13,16 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
 
+      model.put("contacts", Contact.getContactList());
+
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/blabla", (request, response) -> {
+    get("/contact/:id", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
-      model.put("template", "templates/contacts.vtl");
+      model.put("template", "templates/contact.vtl");
 
-      //Contact contact =
+      model.put("contact", Contact.find(Integer.parseInt(request.params(":id"))));
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -46,13 +48,19 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/newNumber.vtl");
 
+      model.put("contactId", request.queryParams("contactId"));
+
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
     post("/newNumber", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/success.vtl");
+
+      String id = request.queryParams("contactId");
       Phone phone = new Phone(Integer.parseInt(request.queryParams("areaCode")), (Integer.parseInt(request.queryParams("phoneNumber"))), request.queryParams("type"));
+      Contact.find(Integer.parseInt(id)).addNumber(phone);
       model.put("phone", phone);
+      model.put("contactId", id);
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
   }

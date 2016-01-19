@@ -31,33 +31,51 @@ public class ContactTest {
   }
 
   @Test
-  public void contact_CreatedANumberCorrectly_true(){
-    Contact contact = new Contact("Fist", "Last", "1960/01/01");
-    assertEquals(true, contact.addNumber(503, 1112233, "cell"));
+  public void contact_returnId_1(){
+    Contact date = new Contact("", "", "1960/01/01");
+    assertEquals(1, date.getId());
+  }
+
+  @Test
+  public void contact_returnsContactById_true(){
+    Contact newContact = new Contact("Vasya", "Petrov", "1987/07/7");
+    assertEquals(newContact, Contact.find(1));
+  }
+
+  @Test
+  public void contact_returnsContactById_null(){
+    Contact newContact = new Contact("Vasya", "Petrov", "1987/07/7");
+    assertEquals(null, Contact.find(898));
   }
 
   @Test
   public void contact_returnAmountOfNumbers_2(){
     Contact contact = new Contact("Fist", "Last", "1960/01/01");
-    contact.addNumber(503, 1112233, "cell");
-    contact.addNumber(503, 1112244, "home");
+    Phone firstPhone = new Phone (503, 1112233, "cell");
+    Phone secondPhone = new Phone (503, 1112234, "home");
+    contact.addNumber(firstPhone);
+    contact.addNumber(secondPhone);
     assertEquals(2, contact.numberAmount());
   }
 
   @Test
   public void contact_returnNumberByID_5031112233cell(){
     Contact contact = new Contact("Fist", "Last", "1960/01/01");
-    contact.addNumber(503, 1112233, "cell");
-    contact.addNumber(503, 1112244, "home");
+    Phone firstPhone = new Phone (503, 1112233, "cell");
+    Phone secondPhone = new Phone (503, 1112234, "home");
+    contact.addNumber(firstPhone);
+    contact.addNumber(secondPhone);
     assertEquals("503-1112233 cell", contact.getPhoneNumber(1));
-    assertEquals("503-1112244 home", contact.getPhoneNumber(2));
+    assertEquals("503-1112234 home", contact.getPhoneNumber(2));
   }
 
   @Test
   public void contact_returnListOfNumbers(){
     Contact contact = new Contact("Fist", "Last", "1960/01/01");
-    contact.addNumber(503, 1112233, "cell");
-    contact.addNumber(503, 1112244, "home");
+    Phone firstPhone = new Phone (503, 1112233, "cell");
+    Phone secondPhone = new Phone (503, 1112234, "home");
+    contact.addNumber(firstPhone);
+    contact.addNumber(secondPhone);
     assertEquals(2, contact.getNumberList().size());
   }
 

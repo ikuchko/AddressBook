@@ -1,0 +1,21 @@
+<h1>Contacts: $contact.getFirstName() $contact.getLastName()</h1>
+
+<div class="bs-callout bs-callout-warning" id="callout-buttons-ff-height">
+<h3>Phone number(s):</h3>
+  #foreach ($phone in $contact.getNumberList())
+    <p>$phone.getPhoneNumber() ($phone.getType())</p>
+  #end
+</div>
+
+<br>
+<br>
+<br>
+
+<form action="/newNumber" method="get">
+  <input type="hidden" name="contactId" value="$contact.getId()">
+  <button type="submit" class="btn btn-warning" name="button">Add phone number</button>
+</form>
+
+<br>
+
+<a href="/">Main menu</a>
