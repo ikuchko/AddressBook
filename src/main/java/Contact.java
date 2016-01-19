@@ -116,8 +116,13 @@ import org.sql2o.*;
     emailList.add(email);
   }
 
-  public ArrayList<Email> getEmailList() {
-    return emailList;
+  public List<Email> getEmailList() {
+    String sql = "SELECT id, email, type, contact_id AS contactId FROM emails WHERE contact_id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetch(Email.class);
+    }
   }
 
   public void addAddress(Address address){
