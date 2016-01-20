@@ -2,7 +2,7 @@
 
 <div class="bs-callout bs-callout-warning" id="callout-buttons-ff-height">
 <h3>Phone number(s):</h3>
-  #foreach ($phone in $contact.getNumberList())
+  #foreach ($phone in $contact.getPhoneList())
     <p>$phone.getPhoneNumber() ($phone.getType())</p>
   #end
 </div>

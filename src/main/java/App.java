@@ -13,7 +13,7 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       model.put("template", "templates/index.vtl");
 
-      model.put("contacts", Contact.getContactList());
+      model.put("contacts", Contact.all());
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -39,6 +39,7 @@ public class App {
       model.put("template", "templates/success.vtl");
 
       Contact contact = new Contact(request.queryParams("firstName"), request.queryParams("lastName"), request.queryParams("dateOfBirth"));
+      contact.save();
 
       model.put("contact", contact);
       return new ModelAndView(model, layout);
@@ -52,16 +53,17 @@ public class App {
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-    // post("/newNumber", (request, response) -> {
-    //   Map<String, Object> model = new HashMap<String, Object>();
-    //   model.put("template", "templates/success.vtl");
-    //
-    //   String id = request.queryParams("contactId");
-    //   Phone phone = new Phone(Integer.parseInt(request.queryParams("areaCode")), (Integer.parseInt(request.queryParams("phoneNumber"))), request.queryParams("type"));
-    //   Contact.find(Integer.parseInt(id)).addNumber(phone);
-    //   model.put("phone", phone);
-    //   model.put("contactId", id);
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+    post("/newNumber", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/success.vtl");
+
+      String id = request.queryParams("contactId");
+      Phone phone = new Phone(Integer.parseInt(request.queryParams("areaCode")), (Integer.parseInt(request.queryParams("phoneNumber"))), request.queryParams("type"), Integer.parseInt(id));
+      phone.save();
+      //Contact.find(Integer.parseInt(id)).addNumber(phone);
+      model.put("phone", phone);
+      //model.put("contactId", id);
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }

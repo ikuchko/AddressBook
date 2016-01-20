@@ -5,5 +5,5 @@
 #end
 #if ($phone)
   <h3>You successfuly create new phone number: $phone.getPhoneNumber()</h3>
-  <a href="/contact/$contactId">Return to contacts</a>
+  <a href="/contact/$phone.getContactId()">Return to contacts</a>
 #end

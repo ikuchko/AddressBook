@@ -4,10 +4,10 @@ import java.text.SimpleDateFormat;
 import org.sql2o.*;
 
   public class Contact {
-  private ArrayList<Phone> phoneNumbers = new ArrayList<Phone>();
-  private static ArrayList<Contact> contactList = new ArrayList<Contact>();
-  private ArrayList<Email> emailList = new ArrayList<Email>();
-  private ArrayList<Address> addressList = new ArrayList<Address>();
+  // private ArrayList<Phone> phoneNumbers = new ArrayList<Phone>();
+  // private static ArrayList<Contact> contactList = new ArrayList<Contact>();
+  // private ArrayList<Email> emailList = new ArrayList<Email>();
+  // private ArrayList<Address> addressList = new ArrayList<Address>();
   private String mFirstName;
   private String mLastName;
   private String mBirthDate;
@@ -77,44 +77,18 @@ import org.sql2o.*;
     }
   }
 
-  public void addNumber(Phone phoneNumber){
-    phoneNumbers.add(phoneNumber);
-  }
 
-  public int numberAmount(){
-    return phoneNumbers.size();
-  }
 
-  public String getPhoneNumber(int number) {
-    Phone phone;
-    phone = phoneNumbers.get(number-1);
-    return phone.getPhoneNumber() + " " + phone.getType();
-  }
+  // public int numberAmount(){
+  //   return phoneNumbers.size();
+  // }
 
-  public ArrayList<Phone> getNumberList() {
-    return phoneNumbers;
+  // public String getPhoneNumber(int number) {
+  //   Phone phone;
+  //   phone = phoneNumbers.get(number-1);
+  //   return phone.getPhoneNumber() + " " + phone.getType();
+  // }
 
-  }
-
-  public static void clear(){
-    contactList.clear();
-    for (Contact contact: Contact.getContactList()){
-      contact.clearData();
-    }
-  }
-  public void clearData(){
-    phoneNumbers.clear();
-    emailList.clear();
-    addressList.clear();
-  }
-
-  public static ArrayList<Contact> getContactList() {
-    return contactList;
-  }
-
-  public void addEmail(Email email){
-    emailList.add(email);
-  }
 
   public List<Email> getEmailList() {
     String sql = "SELECT id, email, type, contact_id AS contactId FROM emails WHERE contact_id=:id";
@@ -141,9 +115,6 @@ import org.sql2o.*;
         .addParameter("id", id)
         .executeAndFetch(Phone.class);
     }
-  }
-  public void addAddress(Address address){
-    addressList.add(address);
   }
 
 }
