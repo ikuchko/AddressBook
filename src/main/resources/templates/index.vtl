@@ -2,7 +2,7 @@
 
 #foreach ($contact in $contacts)
   <br>
-  <a href="/contact/$contact.getId()">$contact.getLastName() $contact.getFirstName() ($contact.numberAmount() number(s) available)</a>
+  <a href="/contact/$contact.getId()">$contact.getLastName() $contact.getFirstName() ($contact.getPhoneList().size() number(s) available)</a>
 #end
 
 <br>
