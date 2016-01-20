@@ -1,5 +1,6 @@
 import org.junit.*;
 import static org.junit.Assert.*;
+import java.util.*;
 
 public class PhoneTest {
 
@@ -43,5 +44,16 @@ public class PhoneTest {
     newPhone.save();
     Phone savedPhone = Phone.find(newPhone.getId());
     assertTrue(newPhone.equals(savedPhone));
+  }
+
+  @Test
+  public void email_retunsAllPhones_true(){
+    Contact newContact = new Contact("First", "Last", "1900-01-22");
+    Phone firstPhone = new Phone(503, 5551122, "cell", newContact.getId());
+    Phone secondPhone = new Phone(503, 5551121, "home", newContact.getId());
+    firstPhone.save();
+    secondPhone.save();
+    Phone[] phones = new Phone[] {firstPhone, secondPhone};
+    assertTrue(newContact.getPhoneList().containsAll(Arrays.asList(phones)));
   }
 }

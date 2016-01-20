@@ -125,12 +125,25 @@ import org.sql2o.*;
     }
   }
 
-  public void addAddress(Address address){
-    addressList.add(address);
+  public List<Address> getAddressList(){
+    String sql = "SELECT id, street, apartment, city, state, zip_code AS zipCode, type, contact_id AS contactId FROM addresses WHERE contact_id=:id";
+    try(Connection con = DB.sql2o.open()){
+      return con.createQuery(sql)
+      .addParameter("id", id)
+      .executeAndFetch(Address.class);
+    }
   }
 
-  public ArrayList<Address> getAddressList(){
-    return addressList;
+  public List<Phone> getPhoneList() {
+    String sql = "SELECT id, area_code AS mAreaCode, phone AS mPhoneNumber, type AS mType, contact_id AS contactId FROM phones WHERE contact_id=:id";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetch(Phone.class);
+    }
+  }
+  public void addAddress(Address address){
+    addressList.add(address);
   }
 
 }
